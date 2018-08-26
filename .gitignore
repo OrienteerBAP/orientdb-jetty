@@ -1,0 +1,14 @@
+# Created by .ignore support plugin (hsz.mobi)
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.next
+*~
+*.swp
+*.swo
+.classpath
+.project
+.settings/
+.idea/
+*.iml
+*.log
