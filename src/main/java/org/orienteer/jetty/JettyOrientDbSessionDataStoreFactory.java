@@ -5,7 +5,7 @@ import org.eclipse.jetty.server.session.SessionDataStore;
 import org.eclipse.jetty.server.session.SessionHandler;
 
 /**
- *
+ * Default implementation of {@link AbstractSessionDataStoreFactory}
  */
 public class JettyOrientDbSessionDataStoreFactory extends AbstractSessionDataStoreFactory {
     @Override
