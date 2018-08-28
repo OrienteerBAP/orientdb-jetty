@@ -43,11 +43,7 @@ public class OrientDbSessionDataStore extends AbstractSessionDataStore {
     @Override
     protected void doStop() throws Exception {
         super.doStop();
-        if (pool != null) {
-            synchronized (this) {
-                pool.close();
-            }
-        }
+        closePool();
     }
 
     @Override
@@ -213,6 +209,24 @@ public class OrientDbSessionDataStore extends AbstractSessionDataStore {
      * @return {@link Optional<ODatabaseDocument>} database or {@link Optional#empty()} if can't acquire database;
      */
     private Optional<ODatabaseDocument> getDatabase() {
+        try {
+            return acquirePool().map(OPartitionedDatabasePool::acquire);
+        } catch (Exception ex) {
+            // Exception throws when connection to database was lost
+            // Close pool and try open it again
+            closePool();
+            try {
+                return acquirePool().map(OPartitionedDatabasePool::acquire);
+            } catch (Exception e) {
+                LOG.error("Can't acquire database from pool!", ex);
+                // Close pool if it is not null
+                closePool();
+            }
+        }
+        return empty();
+    }
+
+    private Optional<OPartitionedDatabasePool> acquirePool() {
         if (pool == null) {
             synchronized (this) {
                 if (pool == null) {
@@ -225,12 +239,17 @@ public class OrientDbSessionDataStore extends AbstractSessionDataStore {
                 }
             }
         }
+        return ofNullable(pool);
+    }
 
-        try {
-            return pool != null ? ofNullable(pool.acquire()) : empty();
-        } catch (Exception ex) {
-            LOG.error("Can't acquire database from pool!", ex);
+    private void closePool() {
+        if (pool != null) {
+            synchronized (this) {
+                if (pool != null) {
+                    pool.close();
+                    pool = null;
+                }
+            }
         }
-        return empty();
     }
 }
