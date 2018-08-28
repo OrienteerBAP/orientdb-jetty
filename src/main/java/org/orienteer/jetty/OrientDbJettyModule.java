@@ -58,6 +58,18 @@ public final class OrientDbJettyModule {
         return oClass;
     }
 
+    public static String getDatabaseUrl() {
+        return System.getProperty("url");
+    }
+
+    public static String getUser() {
+        return System.getProperty("admin.username");
+    }
+
+    public static String getPassword() {
+        return System.getProperty("admin.password");
+    }
+
     /**
      * Create property if it doesn't exists or update exists property
      * @param oClass {@link OClass} session data class
