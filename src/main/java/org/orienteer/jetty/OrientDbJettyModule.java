@@ -59,7 +59,7 @@ public final class OrientDbJettyModule {
     }
 
     public static String getDatabaseUrl() {
-        return System.getProperty("url");
+        return System.getProperty("remote.url");
     }
 
     public static String getUser() {

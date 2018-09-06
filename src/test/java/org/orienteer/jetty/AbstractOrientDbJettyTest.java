@@ -16,7 +16,7 @@ public abstract class AbstractOrientDbJettyTest {
         String user = "admin";
         String password = "admin";
 
-        System.setProperty("url", url);
+        System.setProperty("remote.url", url);
         System.setProperty("admin.username", user);
         System.setProperty("admin.password", password);
 
