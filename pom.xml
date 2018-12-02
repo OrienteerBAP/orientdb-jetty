@@ -51,8 +51,8 @@
 	</licenses>
 
     <properties>
-        <jetty.version>9.4.6.v20170531</jetty.version>
-        <orientdb.version>2.2.36</orientdb.version>
+		<jetty.version>9.4.12.v20180830</jetty.version>
+        <orientdb.version>2.2.37</orientdb.version>
     </properties>
 
     <dependencies>
